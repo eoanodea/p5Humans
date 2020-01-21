@@ -4,7 +4,7 @@ let canvasWidth = 600, canvasHeight = 600, colWidth, rowHeight
 const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPulse = 5, maxPulse = 20
 
 /**
- * setup():
+ * @function setup():
  * Sets the canvas width & height to that of the window.
  * 
  * Creates a canvas with that width and height.
@@ -28,7 +28,7 @@ function setup() {
 }
 
 /**
- * draw():
+ * @function draw():
  * Runs every frame
  * 
  * Sets the canvas background to black
@@ -43,6 +43,11 @@ function draw() {
     mapHumans()
 }
 
+/**
+ * @function drawGrid():
+ * 
+ * @todo find out what the hell this does
+ */
 function drawGrid() {
     for(let x = 0; x < canvasWidth; x+=colWidth) {
         for(let y = 0; y < canvasHeight; y+=rowHeight) {
@@ -53,6 +58,16 @@ function drawGrid() {
     }
 }
 
+/**
+ * @function mapHumans():
+ * 
+ * @description
+ * For each human run the following functions:
+ * @function render()
+ * @function checkEdges()
+ * @function pulseHuman()
+ * @function step()
+ */
 function mapHumans() {
     humans.forEach(human => {
 
