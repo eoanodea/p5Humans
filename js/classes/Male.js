@@ -1,3 +1,9 @@
+
+/**
+ * @class Male
+ * 
+ * Inherits from @class Human
+ */
 class Male extends Human {
     constructor() {
         super()

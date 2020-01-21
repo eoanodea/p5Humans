@@ -1,3 +1,8 @@
+/**
+ * @class Human
+ * 
+ * Parent class for male and female
+ */
 class Human {
     constructor() {
         this.radius = random(minRadius,maxRadius);
@@ -7,15 +12,34 @@ class Human {
         this.stroke = [0, 0, 255, 30]
     }
 
+    /**
+     * @function step():
+     * 
+     * Adds velocity to the position
+     */
     step() {
         this.position.add(this.velocity);
     }
 
+    /**
+     * @function pulseHuman():
+     * 
+     * If the pulse >= maxPulse, decrement the pulse value
+     * if it is <= minPulse, increment the value
+     * 
+     * @todo Fix Pulse functionality
+     */
     pulseHuman() {
         if(this.pulse >= maxPulse) this.pulse--
         else if(this.pulse <= minPulse ) this.pulse++
     }
 
+    /**
+     * @function checkEdges():
+     * 
+     * Ensures the position of the human is within
+     * the canvas
+     */
     checkEdges() {
         if(this.position.x < 0 || this.position.x > width){
             this.velocity.x = this.velocity.x * -1
@@ -26,6 +50,11 @@ class Human {
         }
     }
 
+    /**
+     * @function render():
+     * 
+     * Runs every frame and draws the Human
+     */
     render() {
         stroke(this.stroke.map(dat => dat));
         strokeWeight(5)
@@ -34,6 +63,5 @@ class Human {
             translate(this.position.x,this.position.y)
             ellipse(0, 0, (this.radius*2 + this.pulse), (this.radius*2  + this.pulse));
         pop();
-        
     }
 }
