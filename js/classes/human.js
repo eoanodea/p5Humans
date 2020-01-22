@@ -9,7 +9,9 @@ class Human {
         this.position = createVector(random(this.radius, width - this.radius * 2), random(this.radius, height - this.radius * 2));
         this.velocity = createVector(random(minVelocity, maxVelocity), random(minVelocity, maxVelocity));
         this.pulse = floor(random(minPulse, maxPulse))
+        this.isGrowing = true
         this.stroke = [0, 0, 255, 30]
+
     }
 
     /**
@@ -27,11 +29,16 @@ class Human {
      * If the pulse >= maxPulse, decrement the pulse value
      * if it is <= minPulse, increment the value
      * 
-     * @todo Fix Pulse functionality
      */
     pulseHuman() {
-        if(this.pulse >= maxPulse) this.pulse--
-        else if(this.pulse <= minPulse ) this.pulse++
+        if(this.isGrowing) this.pulse++
+        else this.pulse--
+
+        if (this.pulse > 200) {
+            this.isGrowing = false;
+        } else if (this.pulse < 100) {
+            this.isGrowing = true;
+        }
     }
 
     /**
