@@ -10,8 +10,8 @@ class Human {
         this.velocity = createVector(random(minVelocity, maxVelocity), random(minVelocity, maxVelocity));
         this.pulse = floor(random(minPulse, maxPulse))
         this.isGrowing = true
+        this.rateOfPulse = 5
         this.stroke = [0, 0, 255, 30]
-
     }
 
     /**
@@ -31,12 +31,12 @@ class Human {
      * 
      */
     pulseHuman() {
-        if(this.isGrowing) this.pulse++
+        if(this.isGrowing) (this.pulse+=this.rateOfPulse)
         else this.pulse--
 
-        if (this.pulse > 200) {
+        if (this.pulse > maxPulse) {
             this.isGrowing = false;
-        } else if (this.pulse < 100) {
+        } else if (this.pulse < minPulse) {
             this.isGrowing = true;
         }
     }

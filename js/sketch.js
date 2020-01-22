@@ -1,7 +1,7 @@
 let humans = [], humanKey = []
-const numOfHumans = 6
+const numOfHumans = 20
 let canvasWidth = 600, canvasHeight = 600, colWidth, rowHeight
-const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPulse = 5, maxPulse = 50
+const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPulse = 5, maxPulse = 30
 
 /**
  * @function setup():
