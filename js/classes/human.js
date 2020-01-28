@@ -63,6 +63,7 @@ class Human {
      * Runs every frame and draws the Human
      */
     render() {
+        
         stroke(this.stroke.map(dat => dat));
         strokeWeight(5)
 
