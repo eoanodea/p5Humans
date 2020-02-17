@@ -1,6 +1,6 @@
 let humans = [], humanKey = []
 const numOfHumans = 20, gridRows = 10, gridCols = 10
-let canvasWidth = 600, canvasHeight = 600, colWidth, rowHeight
+let canvasWidth = 600, canvasHeight = 600, gridWidth, gridHeight, intersectCount = 0;
 const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPulse = 5, maxPulse = 30
 
 /**
@@ -21,7 +21,8 @@ function setup() {
     createCanvas(canvasWidth, canvasHeight)
     background(0)
 
-    
+    gridWidth = canvasWidth / gridCols
+    gridHeight = canvasHeight / gridRows
 
     for (let i = 0; i < numOfHumans; i++) {
         if(i >= numOfHumans/2) humans.push(new Female(i));
@@ -42,7 +43,7 @@ function setup() {
  * Runs the mapHumans function
  */
 function draw() {
-    background(255)
+    background(0)
 
     make2dArray()
     // drawGrid()
@@ -110,11 +111,38 @@ function splitIntoGrids() {
  * @todo find out what the hell this does
  */
 function drawGrid() {
-    for(let x = 0; x < canvasWidth; x+=colWidth) {
-        for(let y = 0; y < canvasHeight; y+=rowHeight) {
+    for (let i = 0; i < gridRows; i++) {
+        for (let j = 0; j < gridCols; j++) {
+            noFill();
             strokeWeight(1)
-            line(x, 0, x, height);
-            line(0, y, width, y)
+            stroke(0, 244, 0, 50);
+            rect(j * gridWidth, i * gridHeight, gridWidth, gridHeight);
+
+            let intersectCount = 0;
+
+            let tempArray = humanKey[i][j];
+            let numArray = tempArray.length;
+
+            tempArray.forEach(function (indexValue) {
+
+                if (humans[indexValue].intersecting == true) {
+                    intersectCount++
+                }
+            })
+
+            if (numArray == 0) {
+                numArray = ""
+            }
+
+            noStroke();
+            fill(0, 0, 0, 255);
+            textSize(16);
+            textAlign(RIGHT);
+            text(numArray, j * gridWidth + gridWidth - 5, i * gridHeight + 20);
+
+            fill(0, 0, 0, 150);
+            text(intersectCount, j * gridWidth + gridWidth - 5, i * gridHeight + gridHeight - 5);
+
         }
     }
 }

@@ -15,7 +15,7 @@ class Male extends Human {
         super.render()
 
         this.intersecting
-        ? this.stroke = [0, 200, 200, 60]
-        : this.stroke = [0, 0, 200, 100]
+        ? this.stroke = [0, 200, 200, 200]
+        : this.stroke = [0, 0, 200, 200]
     }
 }

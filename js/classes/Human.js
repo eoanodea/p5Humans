@@ -68,6 +68,7 @@ class Human {
     render() {
         
         stroke(this.stroke.map(dat => dat));
+        fill(0);
         strokeWeight(5)
 
         push()
