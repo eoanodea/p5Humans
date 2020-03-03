@@ -1,5 +1,6 @@
+
 let humans = [], humanKey = []
-const numOfHumans = 20, gridRows = 10, gridCols = 10
+const numOfHumans = 5, gridRows = 5, gridCols = 5
 let canvasWidth = 600, canvasHeight = 600, gridWidth, gridHeight, intersectCount = 0;
 const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPulse = 5, maxPulse = 30
 
@@ -46,7 +47,7 @@ function draw() {
     background(0)
 
     make2dArray()
-    // drawGrid()
+    drawGrid()
     splitIntoGrids()
     checkIntersections()
     mapHumans()
@@ -135,12 +136,12 @@ function drawGrid() {
             }
 
             noStroke();
-            fill(0, 0, 0, 255);
+            fill(200, 200, 200, 200);
             textSize(16);
             textAlign(RIGHT);
             text(numArray, j * gridWidth + gridWidth - 5, i * gridHeight + 20);
 
-            fill(0, 0, 0, 150);
+            fill(200, 200, 200, 200);
             text(intersectCount, j * gridWidth + gridWidth - 5, i * gridHeight + gridHeight - 5);
 
         }

@@ -8,7 +8,7 @@ class Male extends Human {
     constructor(_i) {
         super(_i)
         this.stroke = [0, 0, 200, 100]
-        this.bounce = true
+        this.bounce = false
     }
 
     render() {

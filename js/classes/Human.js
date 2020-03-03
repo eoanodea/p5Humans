@@ -11,7 +11,7 @@ class Human {
         this.velocity = createVector(random(minVelocity, maxVelocity), random(minVelocity, maxVelocity));
         this.pulse = floor(random(minPulse, maxPulse))
         this.isGrowing = true
-        this.rateOfPulse = 5
+        this.rateOfPulse = 3
         this.intersecting = false
         this.stroke = [0, 0, 255, 30]
         this.bounce = false
@@ -84,9 +84,9 @@ class Human {
      */
     checkIntersecting(_indexValue) {
         let dist = p5.Vector.sub(this.position, humans[_indexValue].position);
-        //console.log(dist)
+        
         if (dist.mag() < this.radius + humans[_indexValue].radius) {
-            console.log("changed")
+            
             this.intersecting = true;
             humans[_indexValue].intersecting = true;
             if (this.bounce) {

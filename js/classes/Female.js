@@ -9,7 +9,7 @@ class Female extends Human {
         super(_i)
         this.stroke = [250, 0, 0, 100]
         this.rateOfPulse = 0.1
-        this.bounce = true
+        this.bounce = false
     }
 
     render() {
