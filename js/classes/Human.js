@@ -7,6 +7,7 @@ class Human {
     constructor(_i) {
         this.radius = random(minRadius,maxRadius);
         this.position = createVector(random(this.radius, width - this.radius * 2), random(this.radius, height - this.radius * 2));
+        // this.position = createVector(0,0);
         this.arrayPosition = _i
         this.velocity = createVector(random(minVelocity, maxVelocity), random(minVelocity, maxVelocity));
         this.pulse = floor(random(minPulse, maxPulse))
@@ -15,6 +16,11 @@ class Human {
         this.intersecting = false
         this.stroke = [0, 0, 255, 30]
         this.bounce = false
+
+        this.left = false
+        this.right = false
+        this.top = false
+        this.bottom = false
     }
 
     /**
@@ -68,17 +74,27 @@ class Human {
     render() {
         
         stroke(this.stroke.map(dat => dat));
-        fill(0);
+        fill(0, 0, 0, 0);
         strokeWeight(5)
 
         push()
             translate(this.position.x,this.position.y)
             ellipse(0, 0, (this.radius*2 + this.pulse), (this.radius*2  + this.pulse));
+
+            fill(255)
+            textSize(30)
+            textAlign(CENTER, CENTER)
+            text(this.arrayPosition, 0, 0)
         pop();
     }
 
     /**
      * @function checkIntersecting()
+     * 
+     * Checks the intersection of the current molecule
+     * against another molecule 
+     * 
+     * Draws a line between the two intersecting molecules
      * 
      * @param {*_indexValue} _indexValue 
      */
@@ -89,6 +105,14 @@ class Human {
             
             this.intersecting = true;
             humans[_indexValue].intersecting = true;
+
+            stroke(255)
+            strokeWeight(3)
+            line(
+                this.position.x, this.position.y, 
+                humans[_indexValue].position.x, humans[_indexValue].position.y)
+
+
             if (this.bounce) {
 
                 let dx = this.position.x - humans[_indexValue].position.x;
@@ -122,5 +146,9 @@ class Human {
      */
     reset() {
         this.intersecting = false
+        this.left = false
+        this.right = false
+        this.top = false
+        this.bottom = false
     }
 }

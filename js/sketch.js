@@ -1,7 +1,7 @@
 
 let humans = [], humanKey = []
-const numOfHumans = 5, gridRows = 5, gridCols = 5
-let canvasWidth = 600, canvasHeight = 600, gridWidth, gridHeight, intersectCount = 0;
+const numOfHumans = 10, gridRows = 5, gridCols = 5
+let gridWidth, gridHeight, intersectCount = 0;
 const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPulse = 5, maxPulse = 30
 
 /**
@@ -16,14 +16,12 @@ const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPuls
  * numOfHumans variable
  */
 function setup() {
-    canvasWidth = windowWidth
-    canvasHeight = windowHeight
 
-    createCanvas(canvasWidth, canvasHeight)
+    createCanvas(windowWidth, windowHeight)
     background(0)
 
-    gridWidth = canvasWidth / gridCols
-    gridHeight = canvasHeight / gridRows
+    gridWidth = width / gridCols
+    gridHeight = height / gridRows
 
     for (let i = 0; i < numOfHumans; i++) {
         if(i >= numOfHumans/2) humans.push(new Female(i));
@@ -31,6 +29,24 @@ function setup() {
     }
 
     smooth()
+}
+
+/**
+ * @function gridify()
+ * 
+ * Spawns the molecules evenly within
+ * the canvas
+ * 
+ */
+function gridify() {
+    const iNum = Math.sqrt(numOfHumans)
+    const gridX = width / iNum + 1
+    const gridY = height / iNum + 1
+
+    humans.map((dat, i) => {
+        //
+    })
+
 }
 
 /**
@@ -45,12 +61,11 @@ function setup() {
  */
 function draw() {
     background(0)
-
     make2dArray()
-    drawGrid()
     splitIntoGrids()
-    checkIntersections()
+    drawGrid()
     mapHumans()
+    checkIntersections()
 }
 
 /**
@@ -78,8 +93,8 @@ function make2dArray() {
 function splitIntoGrids() {
 
     humans.forEach(function (human) {
-        let iNum = floor(human.position.y / canvasHeight);
-        let jNum = floor(human.position.x / canvasWidth);
+        let iNum = floor(human.position.y / gridHeight);
+        let jNum = floor(human.position.x / gridWidth);
         
         if(iNum<0){iNum=0}
         if(iNum>gridRows-1){iNum=gridRows-1}
@@ -88,28 +103,48 @@ function splitIntoGrids() {
         
         humanKey[iNum][jNum].push(human.arrayPosition);
 
-        if (human.position.x % canvasWidth < human.radius && human.position.x > canvasWidth) {    
+        //Left
+        if (human.position.x % width < human.radius && human.position.x > width) {    
             humanKey[iNum][jNum - 1].push(human.arrayPosition);
+            human.left = true
         }
         
-        if (human.position.x % canvasWidth > canvasWidth - human.radius && human.position.x < width - canvasWidth) {
+        //Right
+        if (human.position.x % width > width - human.radius && human.position.x < width - width) {
             humanKey[iNum][jNum + 1].push(human.arrayPosition);
+            human.right = true
         }
         
-        if (human.position.y % canvasHeight < human.radius && human.position.y > canvasHeight) {   
+        //Bottom
+        if (human.position.y % height < human.radius && human.position.y > height) {   
             humanKey[iNum-1][jNum].push(human.arrayPosition);
+            human.bottom = true
         }
         
-        if (human.position.y % canvasHeight > canvasHeight - human.radius && human.position.y < height -canvasWidth) {
+        //Top
+        if (human.position.y % height > height - human.radius && human.position.y < height -width) {
             humanKey[iNum+1][jNum].push(human.arrayPosition);
+            human.top = true
         }
+
+        //top left +1 -1
+        if(human.top && human.left) humanKey[iNum+1][jNum-1].push(human.arrayPosition);
+
+        //top right +1 + 1
+        if(human.top && human.right) humanKey[iNum+1][jNum+1].push(human.arrayPosition);
+
+        //bottom left -1 -1
+        if(human.bottom && human.left) humanKey[iNum-1][jNum-1].push(human.arrayPosition);
+
+        //bottom right -1 +1
+        if(human.bottom && human.right) humanKey[iNum-1][jNum+1].push(human.arrayPosition);
     });
 }
 
 /**
  * @function drawGrid():
  * 
- * @todo find out what the hell this does
+ * Draws the grid depending on gridRows and gridCols
  */
 function drawGrid() {
     for (let i = 0; i < gridRows; i++) {
@@ -131,9 +166,9 @@ function drawGrid() {
                 }
             })
 
-            if (numArray == 0) {
-                numArray = ""
-            }
+            // if (numArray == 0) {
+            //     numArray = ""
+            // }
 
             noStroke();
             fill(200, 200, 200, 200);
@@ -185,21 +220,10 @@ function checkIntersections() {
 function mapHumans() {
     humans.forEach(human => {
 
-        human.render();
+        human.step();
         human.checkEdges();
         human.pulseHuman()
-        human.step();
+        human.render();
         human.reset()
     });
 }
-
-// /**
-//  * @function resetHumans()
-//  * 
-//  * 
-//  */
-// function resetHumans() {
-//     for (let i = 0; i < numOfHumans; i++) {
-//         humans[i].reset()
-//     }
-// }
