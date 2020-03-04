@@ -6,8 +6,8 @@
 class Human {
     constructor(_i) {
         this.radius = random(minRadius,maxRadius);
-        this.position = createVector(random(this.radius, width - this.radius * 2), random(this.radius, height - this.radius * 2));
-        // this.position = createVector(0,0);
+        // this.position = createVector(random(this.radius, width - this.radius * 2), random(this.radius, height - this.radius * 2));
+        this.position = createVector(0,0);
         this.arrayPosition = _i
         this.velocity = createVector(random(minVelocity, maxVelocity), random(minVelocity, maxVelocity));
         this.pulse = floor(random(minPulse, maxPulse))

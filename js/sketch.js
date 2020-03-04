@@ -1,6 +1,6 @@
 
 let humans = [], humanKey = []
-const numOfHumans = 10, gridRows = 5, gridCols = 5
+const numOfHumans = 50, gridRows = 10, gridCols = 10
 let gridWidth, gridHeight, intersectCount = 0;
 const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPulse = 5, maxPulse = 30
 
@@ -28,6 +28,10 @@ function setup() {
         else humans.push(new Male(i));
     }
 
+    gridify()
+
+    // noLoop()
+
     smooth()
 }
 
@@ -39,12 +43,18 @@ function setup() {
  * 
  */
 function gridify() {
-    const iNum = Math.sqrt(numOfHumans)
+    const iNum = ceil(sqrt(numOfHumans))
+    const jNum = iNum
+
     const gridX = width / iNum + 1
-    const gridY = height / iNum + 1
+    const gridY = height / jNum + 1
 
     humans.map((dat, i) => {
-        //
+        let iPos = i%iNum
+        let jPos = floor(i/jNum)
+
+        dat.position.x = iPos * gridX + 50
+        dat.position.y = jPos * gridY + 50
     })
 
 }
