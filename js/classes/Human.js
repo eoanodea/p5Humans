@@ -6,7 +6,6 @@
 class Human {
     constructor(_i) {
         this.radius = random(minRadius,maxRadius);
-        // this.position = createVector(random(this.radius, width - this.radius * 2), random(this.radius, height - this.radius * 2));
         this.position = createVector(0,0);
         this.arrayPosition = _i
         this.velocity = createVector(random(minVelocity, maxVelocity), random(minVelocity, maxVelocity));
@@ -15,8 +14,7 @@ class Human {
         this.rateOfPulse = 3
         this.intersecting = false
         this.stroke = [0, 0, 255, 30]
-        this.bounce = false
-
+        this.bounce = true
         this.left = false
         this.right = false
         this.top = false
@@ -135,8 +133,35 @@ class Human {
                 this.velocity.y -= dvy;
                 humans[_indexValue].velocity.x += dvx;
                 humans[_indexValue].velocity.y += dvy;
+
+                this.moveBall(_indexValue)
             }
         }
+    }
+
+    /**
+     * @function moveBall()
+     * 
+     * @description ensures two humans will not overlap with eachother
+     * Takes a parameter of the ID of the second human
+     * 
+     * @param _indexValue
+     * 
+     */
+    moveBall(_indexValue) {
+        const dist = p5.Vector.sub(this.position, humans[_indexValue].position);
+
+        const heading  = dist.heading()
+        const moveDistance  = (abs(dist.mag() - this.radius - humans[_indexValue].radius) / 2)
+
+        const dx = moveDistance * (Math.cos(heading))
+        const dy = moveDistance * (Math.sin(heading))
+
+        this.position.x += dx
+        this.position.y += dy
+
+        humans[_indexValue].position.x -= dx
+        humans[_indexValue].position.y -= dy
     }
 
     /**
