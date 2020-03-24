@@ -136,6 +136,8 @@ class Human {
 
                 this.moveBall(_indexValue)
             }
+
+            return true
         }
     }
 

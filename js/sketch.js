@@ -1,8 +1,9 @@
 
 let humans = [], humanKey = []
-const numOfHumans = 50, gridRows = 10, gridCols = 10
+const numOfHumans = 20, gridRows = 10, gridCols = 10
 let gridWidth, gridHeight, intersectCount = 0;
 const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPulse = 5, maxPulse = 30
+const percentOfInfected = 10
 
 /**
  * @function setup():
@@ -16,7 +17,6 @@ const minRadius = 20, maxRadius = 25, minVelocity = -4, maxVelocity = 4, minPuls
  * numOfHumans variable
  */
 function setup() {
-
     createCanvas(windowWidth, windowHeight)
     background(0)
 
@@ -24,8 +24,10 @@ function setup() {
     gridHeight = height / gridRows
 
     for (let i = 0; i < numOfHumans; i++) {
-        if(i >= numOfHumans/2) humans.push(new Female(i));
-        else humans.push(new Male(i));
+        const randomNum = random()
+
+        if(randomNum < percentOfInfected/100) humans.push(new Male(i));
+        else humans.push(new Female(i));
     }
 
     gridify()
@@ -209,7 +211,10 @@ function checkIntersections() {
                     for (let w = z + 1; w < numInArray; w++) {
                         let indexValue01 = tempArray[z];
                         let indexValue02 = tempArray[w];
-                        humans[indexValue01].checkIntersecting(indexValue02)
+
+                        if(humans[indexValue01].checkIntersecting(indexValue02)) {
+                            humans[indexValue01].checkHealth(indexValue02)
+                        }
                     }
                 }
             }
